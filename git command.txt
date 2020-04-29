@@ -147,3 +147,8 @@ git push -u origin master
 …or push an existing repository from the command line
 git remote add origin https://github.com/mandarinkb/web-scrapping-api.git
 git push -u origin master
+
+===
+update code from respository
+ git fetch --all
+ git reset --hard origin/master
