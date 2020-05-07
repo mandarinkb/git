@@ -1,0 +1,154 @@
+#Learn more >> https://www.youtube.com/watch?v=nQdR_csFOso&list=PLRu9p-l30DbWoU9GqH1W48CBvikjAlSbm&index=1
+
+git --version
+git config --global user.name "mandarinkb"          // set name
+git config --global user.email "mandarinkb@gmail.com"          // set email      
+git config --list           // check list config
+
+#Create Git in project (สร้าง git file in project)
+git init         //  create respository in project
+git status       ///  check status
+	- Untracked สถานะไฟล์ยังไม่ได้ถูกจัดเก็บไว้ในระบบ Git
+                   - modified สถานะที่มีการแก้ไขไฟล์
+	- Working Directory สถานะที่มีเปลี่ยนแปลงหรือแก้ไขไฟล์
+	- Staged สถานะเตรียม Commit เพื่อยืนยันการเปลี่ยนแปลงก่อนเก็บลงในสถานะ Local Respository
+	- Local Repository สถานะเก็บบันทึกข้อมูลไฟล์ที่เปลี่ยนแปลงลงใน Git
+	- Remote Repository สถานะเก็บบันทึกข้อมูลไฟล์ที่เปลี่ยนแปลงลงใน Git Repository แบบ Hosting (ที่เครื่องเซิร์ฟเวอร์)
+
+#Git Add : เพิ่มไฟล์ใหม่หรือไฟล์ที่แก้ไขไปสู่สถานะ Staged
+git add <file_name>            //เพิ่มชื่อไฟล์เข้าไปที่สถานะ Staged
+git add README.md         // เพิ่มไฟล์ชื่อ README.md  เข้าไปที่สถานะ Staged
+git add .                               // ใช้กรณีที่มีหลายๆไฟล์และต้องการเพิ่มเข้าไปทั้งหมด เข้าไปที่สถานะ Staged
+
+#Git Commit : เก็บไฟล์ Staged เข้าไปใน Local Repository
+git commit -m "message"          // ยืนยันการเปลี่ยนแปลงพร้อมข้อความ
+
+#Git Log : แสดงประวัติของ Repository
+git log 
+git log --oneline
+git log --oneline --decorate
+git log --oneline --decorate --graph
+git log --stat                                    // Diff from log
+git log --grep="Message"              // Log by message
+git log --after="2017-11-11"         // Log in date
+git log --before="2017-11-11"         // Log in date   
+git log --author=olan                    // Log by user
+
+#Git Clean : แสดงและลบไฟล์ที่อยู่สถานะ Untracked
+git clean -n            // แสดง Source Code ที่อยู่ในสถานะ Untracked
+git clean -df          //ลบ Source Code ที่อยู่ในสถานะ Untracked
+
+
+git reset --hard ตามด้วย commit id    // set ข้อมูลที่ทำการ commit ไปแล้ว
+
+----- Git Branch : การแตกกิ่งของ Repository -----
+#Git Branch : เพิ่ม ลบ แสดงกิ่งของ Repository
+git branch
+git branch --all
+git branch develop             // สร้าง branch ชื่อ develop
+git branch --delete develop    // ลบ branch ชื่อ develop
+
+#Git Checkout : สลับการทำงานระหว่าง Branch หรือ Commit ID
+#ย้ายการทำงานไปที่ Branch หรือ commit_id ที่ระบุ
+git checkout <branch name ที่ต้องการไปทำงาน หรือ commit id>
+
+#สร้าง branch ชื่อ test และทำการสลับการทำงานมาที่ Branch นี้
+git checkout -b test
+
+#เลือกแค่บางไฟล์จาก Branch อื่น เข้ามา Merge กับ Working Directory ที่กำลังทำงาน
+git checkout <branch name> <file name>
+
+#Git Reset : ย้อนกลับไปก่อนหน้าด้วย Branch หรือ Commit ID
+git reset --hard d31f399             // ย้อนกลับไปที่ Commit id d31f399  | HARD  (ย้อนกลับสู่เริ่มต้นก่อนการ commit)
+git reset --soft d31f399              // ย้อนกลับไปที่ Commit id d31f399  | SOFT   (ย้อนกลับไปสู่สถานะ Staged  )
+git reset --mixed develop          // ย้อนกลับไปที่ Branch develop         | MIXED (ย้อนกลับไปสู่สถานะ Working Directory  )
+
+#Git merge
+#รวม branch master กับ branch feature แบบ no fast forward
+git merge --no-ff <ชื่อ branch feature>
+#รวม branch master กับ branch feature แบบ fast forward
+git merge <ชื่อ branch feature> 
+
+#Git Diff : เปรียบเทียบ Working Directory กับ Branch หรือ Commit ID ที่ระบุ (เปรียบเทียบความแตกต่างระหว่าง Branch)
+เช่นตอนนี้เราอยู่ที่ Branch master ต้องการดู Branch feature
+git diff 82de188
+git diff develop
+
+#Git Ignore
+Git Ignore คือ การกำหนดให้ Git รู้ว่าไฟล์หรือโฟลเดอร์ภายใน Working Directory ที่ไม่ต้องการเก็บภายใน Repository
+#วิธีการใช้ Git Ignore สามารถทำได้ดังนี้
+	สร้างไฟล์ .gitignore
+	ใส่ชื่อโฟลเดอร์หรือไฟล์ภายใน Working Directory ในไฟล์ .gitignore
+		เช่น test2.txt  (กรณีชื่อไฟล์)
+                                             /asset  (กรณีชื่อโฟลเดอร์)
+	ทำการ Add และ Commit ไฟล์ .gitignore เข้า Git
+
+###### Remote Reposittory (Git Hosting)######
+ขั้นตอนการใช้งาน Github
+	สมัครสมาชิก Github
+	สร้าง Repository
+	เชื่อมต่อ Remote Repository กับ local Repository บนเครื่องของเรา
+	เพิ่มทีมงานคนอื่นบน Repository
+#Git Remote : คำสั่งติดต่อ Remote Repository
+git remote add origin URL          //เพิ่ม Remote Repository ชื่อ origin
+git remote -v                                     //แสดง Remote Repository
+
+#Git Push : ส่งไฟล์ Local Repository ที่เปลี่ยนแปลงขึ้นไปบน Remote Repository
+#ส่งการเปลี่ยนแปลง Branch master ไปยัง Remote ที่ชื่อ origin
+git push origin master
+
+#ส่งการเปลี่ยนแปลง Branch develop ไปยัง Remote ที่ชื่อ origin
+git push origin develop 
+
+#ส่งการเปลี่ยนแปลงลบ Branch develop ไปยัง Remote ที่ชื่อ origin
+git push --delete origin develop 
+
+#Git Fetch : ดึงไฟล์ล่าสุดบน Remote Repository มายัง Local Repository เพื่อรอ Merge
+#รับการเปลี่ยนแปลงทุก Branch จาก Remote Repository
+git fetch --all
+
+#รับการเปลี่ยนแปลง Branch master จาก Remote Respository ที่ชื่อ origin
+git fetch origin master
+
+#รวมการเปลี่ยนแปลงบน Remote Repository มายัง Local Repository 
+git merge
+git merge origin/master
+
+#Git Pull : (fetch + merge)  (เช่น get last)
+git pull <remote> <branch>
+git pull origin master
+
+#Git Clone : Clone Remote Repository
+git clone <https://.../.git>
+
+#Git Conflict : เกิดการแก้ไขไฟล์ชนกัน
+# 1 เมื่อ add และ commit ไฟล์แล้ว ไม่สามารถ push ขึ้น Remote Repository ได้
+git pull
+<<<<<<HEAD
+Test git Version3.......fsfsfs
+=======
+Test git Version 4 ........
+>>>>>>>fs5sfsf5sfeg
+#2 ทำการแก้ไขไฟล์ที่มีการชนกันแล้ว add , commit , push ไป Remote Repository ใหม่อีกครั้ง
+git add .
+git commit -m "update error conflict"
+git push origin master
+
+
+======
+…or create a new repository on the command line
+echo "# web-scrapping-api" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/mandarinkb/web-scrapping-api.git
+git push -u origin master
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/mandarinkb/web-scrapping-api.git
+git push -u origin master
+
+===
+update code from respository
+git fetch --all
+git reset --hard origin/master
